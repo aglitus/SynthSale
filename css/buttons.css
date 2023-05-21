@@ -1,0 +1,102 @@
+.button-confirm {
+    padding: 5px 30px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 10px;
+    display: block;
+    border: 0px;
+    box-shadow: 0px 0px 14px -7px #19f04b;
+    background-image: linear-gradient(45deg, #4bb27a 0%, #94df8a 51%, #FF512F 100%);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-confirm:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+.button-confirm:active {
+    transform: scale(0.95);
+}
+
+.button-cancel {
+    padding: 5px 30px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 10px;
+    display: block;
+    border: 0px;
+    box-shadow: 0px 0px 14px -7px #f61313;
+    background-image: linear-gradient(45deg, #f6a3a3 0%, #e06662e6 51%, #d79104 100%);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-cancel:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+.button-cancel:active {
+    transform: scale(0.95);
+}
+
+.button-new {
+    padding: 5px 30px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 10px;
+    display: block;
+    border: 0px;
+    box-shadow: 0px 0px 14px -7px #1c3bec;
+    background-image: linear-gradient(45deg, #1d44b1 0%, #63b4cd 51%, #65204a 100%);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-new:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+.button-new:active {
+    transform: scale(0.95);
+}
+
+table.dataTable {
+    border: 5px #e9e0ff3c solid!important;
+    border-radius: 10px;
+    margin-top: 20px !important;
+    margin-bottom: 10px!important;
+    box-shadow: rgba(65, 46, 240, 0.4) 5px 5px, rgba(63, 35, 242, 0.3) 10px 10px, rgba(76, 38, 249, 0.2) 15px 15px, rgba(69, 46, 240, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
+}
+
+.table-carrinho {
+    background: linear-gradient(359deg, #dbe1ffa8 0%, #e9e0ff8a 51%, #4410ae00 100%);
+    border: 1px solid #dbe1ffa8;
+    border-radius: 10px;
+    box-shadow:  0px 0px 14px -7px #1c3bec;
+
+}

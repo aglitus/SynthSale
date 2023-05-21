@@ -1,0 +1,123 @@
+<link rel="stylesheet" href="../css/header.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<div class="container-fluid">
+    <nav class="main_nav_dropdown navbar navbar-expand-lg p-2"
+        style="border: 5px solid rgba(49, 28, 237, 0.34);background: linear-gradient(359deg, #d3d8f1a8 0%, #eaf7ff8a 51%, #5631a100 100%); box-shadow: rgba(65, 46, 240, 0.4) 5px 5px, rgba(63, 35, 242, 0.3) 10px 10px, rgba(76, 38, 249, 0.2) 15px 15px, rgba(69, 46, 240, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;">
+        <div class="container-fluid pe-lg-2 p-0 ">
+            <a class="navbar-brand fw-bold fs-3" href="#"><img class="img-fluid " width="100"
+                    src="../img/logo.png" /></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto standard_dropdown  mb-2 mb-lg-0 main_nav_dropdown">
+                    <li class="nav-item">
+                        <a class="nav-link pe-3 me-4 fw-bold" aria-current="page" href="home.html">INÍCIO</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pe-3 me-4 fw-bold" href="shop.html">SHOP</a>
+                    </li>
+                    <li class="nav-item " id="admin">
+                        <a class="nav-link dropdown-toggle pe-3 me-4 fw-bold" id="dropdown" data-bs-toggle="dropdown"
+                            href="#">GERENCIAMENTO</a>
+                        <ul class="dropdown-menu " aria-labelledby="dropdown">
+                            <li><a class="dropdown-item" href="usuarios.html">Usuários</a></li>
+                            <li><a class="dropdown-item" href="tipoUsuario.html">Tipos de usuário</a></li>
+                            <li><a class="dropdown-item" href="fornecedor.html">Fornecedores</a></li>
+                            <li><a class="dropdown-item" href="categoria.html">Categorias</a></li>
+                            <li><a class="dropdown-item" href="produtos.html">Produtos</a></li>
+                            <li><a class="dropdown-item" href="cidade.html">Cidades</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pe-3 me-4 fw-bold" href="logVendas.html">REGISTRO DE VENDAS</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav icons ms-auto mb-2 mb-lg-0">
+                    <li class=" nav-item pe-3">
+                        <h3>
+                            <a href="" id="carrinho" class="icon-nav bi bi-cart-fill">
+                                <span class="num rounded-circle" id="qtde"></span>
+                            </a>
+
+                        </h3>
+
+                    </li>
+                    <li class="nav-item pe-3">
+                        <h3>
+                            <button class="icon-nav bi bi-person-circle" id="logout">
+                                <span class="num rounded-circle" id="username"></span>
+                            </button>
+
+                        </h3>
+
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<script>
+
+    function usuarioLogado() {
+
+        if (localStorage.getItem("username")) {
+            $("#username").text(localStorage.getItem("username"));
+            $("#linkuser").attr('href', 'user.html');
+            $("#carrinho").attr('href', 'venda.html');
+        } else {
+            $("#username").text("Logar");
+            $("#linkuser").attr('href', 'login.html');
+            $("#carrinho").attr('href', 'login.html');
+        }
+    }
+
+    function checarPapel() {
+
+        if (localStorage.getItem("user_type") != "Admin") {
+
+            $("#admin").remove();
+
+        }
+    }
+
+    function contarItemsCarrinho() {
+        var contador = 0;
+
+        if (localStorage.getItem("carrinho") != "" && localStorage.getItem("carrinho") != "[]") {
+
+            var items = JSON.parse(localStorage.getItem("carrinho"));
+
+            items.forEach((el) => {
+                contador++;
+            });
+
+        }
+
+
+        $("#qtde").text(contador);
+    }
+
+    $(function () {
+
+        usuarioLogado();
+
+        checarPapel();
+
+        contarItemsCarrinho();
+
+        $("#logout").on("click", function (e) {
+
+            localStorage.clear();
+            window.location.href = "login.html";
+
+        });
+
+    });
+
+</script>
