@@ -40,7 +40,13 @@ function carregaProdutos() {
 
       $("#produtos").html(html);
 
-    }
+    },
+    error: function (http, textStatus) {
+            
+      if (http.status == 401){
+          window.location.href = "login.html?expired=1";
+      }
+  }
   })
 }
 

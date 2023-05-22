@@ -94,7 +94,7 @@ $(function () {
                 id: parseInt($("#city option:selected").val())
             },
             userType: {
-                id: 1
+                id: 2
             }
 
         };

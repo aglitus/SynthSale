@@ -16,7 +16,7 @@ function carregaCarrinho() {
 
 
 
-    if (localStorage.getItem("carrinho") != "" && localStorage.getItem("carrinho") != "[]") {
+    if (localStorage.getItem("carrinho") != "" && localStorage.getItem("carrinho") != "[]" && localStorage.getItem("carrinho") != null) {
 
         var items = JSON.parse(localStorage.getItem('carrinho'));
 

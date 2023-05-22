@@ -20,7 +20,7 @@
                     <li class="nav-item">
                         <a class="nav-link pe-3 me-4 fw-bold" href="shop.html">SHOP</a>
                     </li>
-                    <li class="nav-item " id="admin">
+                    <li class="nav-item admin" >
                         <a class="nav-link dropdown-toggle pe-3 me-4 fw-bold" id="dropdown" data-bs-toggle="dropdown"
                             href="#">GERENCIAMENTO</a>
                         <ul class="dropdown-menu " aria-labelledby="dropdown">
@@ -32,7 +32,7 @@
                             <li><a class="dropdown-item" href="cidade.html">Cidades</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item admin">
                         <a class="nav-link pe-3 me-4 fw-bold" href="logVendas.html">REGISTRO DE VENDAS</a>
                     </li>
                 </ul>
@@ -81,7 +81,7 @@
 
         if (localStorage.getItem("user_type") != "Admin") {
 
-            $("#admin").remove();
+            $(".admin").remove();
 
         }
     }
@@ -89,7 +89,7 @@
     function contarItemsCarrinho() {
         var contador = 0;
 
-        if (localStorage.getItem("carrinho") != "" && localStorage.getItem("carrinho") != "[]") {
+        if (localStorage.getItem("carrinho") != "" && localStorage.getItem("carrinho") != "[]" && localStorage.getItem("carrinho") != null) {
 
             var items = JSON.parse(localStorage.getItem("carrinho"));
 
