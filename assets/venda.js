@@ -68,6 +68,22 @@ $(function () {
 
     carregaCarrinho();
 
+    $.ajax({
+        type: 'GET',
+        url: url + 'product',
+        contentType: "application/json; charset=utf-8",
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("token")
+        },
+        dataType: "json",
+        error: function (http, textStatus) {
+
+            if (http.status == 401) {
+              window.location.href = "login.html?expired=1";
+            }
+          }
+    })
+
     $("#salvar").on('click', function (e) {
 
         var obj = {
