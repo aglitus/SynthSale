@@ -28,7 +28,7 @@ function carregaCidade() {
                 title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
                 text: `${response.responseJSON.message}`,
 
-              });
+            });
         }
     })
 }
@@ -70,7 +70,7 @@ function inserir(data) {
                 title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
                 text: `${response.responseJSON.message}`,
 
-              });
+            });
         }
 
     });
@@ -111,7 +111,7 @@ function alterar(data) {
                 title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
                 text: `${response.responseJSON.message}`,
 
-              });
+            });
         }
 
     });
@@ -153,10 +153,9 @@ function deletar(id) {
                 error: function (response) {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
-                        text: `${response.responseJSON.message}`,
-        
-                      });
+                        title: 'Não é possível deletar o registro. Ele pode estar sendo referenciado em algum outro registro.',
+
+                    });
                 }
 
             });
@@ -189,7 +188,7 @@ function retornaDados(id) {
                 title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
                 text: `${response.responseJSON.message}`,
 
-              });
+            });
         }
 
     });
@@ -264,7 +263,7 @@ function carregarTabela() {
                     {
                         text: '<span><i class="bi bi-person-plus"></i> Novo registro</span>',
                         className: "button-new",
-                        action: function ( e, dt, node, config ) {
+                        action: function (e, dt, node, config) {
                             $("#fornecedores").trigger("reset");
                             $("#id").val("0");
                             $("#modal").modal("show");
@@ -276,8 +275,8 @@ function carregarTabela() {
 
         },
         error: function (http, textStatus) {
-            
-            if (http.status == 401){
+
+            if (http.status == 401) {
                 window.location.href = "login.html?expired=1";
             }
         }
@@ -287,36 +286,39 @@ function carregarTabela() {
 
 $(function () {
 
-    $("header").load("header.html");
-    carregaCidade();
 
-    carregarTabela();
+    if (localStorage.getItem('user_type') == "Admin") {
+        $("header").load("header.html");
+        carregaCidade();
 
-    $("#fornecedores").on('submit', function (e) {
-        e.preventDefault();
+        carregarTabela();
 
-        var obj = {
+        $("#fornecedores").on('submit', function (e) {
+            e.preventDefault();
 
-            name: $("#name").val(),
-            document: $("#document").val(),
-            address: $("#address").val(),
-            city: {
-                id: parseInt($("#city option:selected").val())
-            },
+            var obj = {
 
-        };
+                name: $("#name").val(),
+                document: $("#document").val(),
+                address: $("#address").val(),
+                city: {
+                    id: parseInt($("#city option:selected").val())
+                },
 
-        if ($("#id").val() == "0") {
-            inserir(obj);
-        } else {
-            obj.id = parseInt($("#id").val()),
-                alterar(obj);
-        }
+            };
 
-    });
+            if ($("#id").val() == "0") {
+                inserir(obj);
+            } else {
+                obj.id = parseInt($("#id").val()),
+                    alterar(obj);
+            }
 
-    $("#inserirDados").on("click", function (e) {
-        $("#id").val("0");
-        $("#modal").modal("show");
-    })
+        });
+
+        $("#inserirDados").on("click", function (e) {
+            $("#id").val("0");
+            $("#modal").modal("show");
+        })
+    } else window.location.href = "home.html";
 })

@@ -14,8 +14,6 @@ function removerItem(id) {
 
 function carregaCarrinho() {
 
-
-
     if (localStorage.getItem("carrinho") != "" && localStorage.getItem("carrinho") != "[]" && localStorage.getItem("carrinho") != null) {
 
         var items = JSON.parse(localStorage.getItem('carrinho'));
@@ -112,14 +110,28 @@ $(function () {
                         },
                         data: JSON.stringify(obj_produtoVenda),
                         dataType: "json",
+                        async: false,
                         success: function (data) {
 
                         }
                     });
 
+                    $.ajax({
+                        type: 'GET',
+                        url: url + `product/removeStock/${el.id}/${el.qtde}`,
+                        contentType: "application/json; charset=utf-8",
+                        headers: {
+                            "Authorization": "Bearer " + localStorage.getItem("token")
+                        },
+                        dataType: "json",
+                        async: false,
+                        success: function (json) {
+                
+                            console.log(json)
+                        }
+                    });
+
                 });
-
-
 
                 Swal.fire({
                     icon: 'success',
@@ -128,8 +140,6 @@ $(function () {
 
                 localStorage.setItem("carrinho", "");
                 carregaCarrinho();
-
-
 
             }
         })

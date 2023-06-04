@@ -26,14 +26,17 @@ function carregaProdutos() {
                   <h4>R$${produto.unitaryPrice}</h4>
                   <p class="card-text">
                     
-                    <div class="input-group">
-                        <div class="input-group-prepend">
+                    <div class="input-group class='text-center'">
+                        
+                        ${produto.quantity != 0 ? 
+                          `<div class="input-group-prepend">
                           <span class="input-group-text desc" id="inputGroup-sizing-sm">Quantidade</span>
-                        </div>
-                        <input value="1" type="number" min="1" max="${produto.qtde}" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                          </div><input value="1" type="number" min="1" max="${produto.quantity}" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">` 
+                          : "<h5>Fora de estoque</h5>"}
+                        
                       </div>
                 </p>
-                  <button data-nome="${produto.name}" data-unitary="${produto.unitaryPrice}" data-idprod="${produto.id}" class="button-new"><h4><span><i class="bi bi-cart-plus"></i> Adicionar</span></h4></button>
+                  <button data-nome="${produto.name}" data-unitary="${produto.unitaryPrice}" ${produto.quantity == 0 ? "disabled" : ""} data-idprod="${produto.id}" class="button-new"><h4><span><i class="bi bi-cart-plus"></i> Adicionar</span></h4></button>
                 </div>
               </div>`;
       });
@@ -42,11 +45,11 @@ function carregaProdutos() {
 
     },
     error: function (http, textStatus) {
-            
-      if (http.status == 401){
-          window.location.href = "login.html?expired=1";
+
+      if (http.status == 401) {
+        window.location.href = "login.html?expired=1";
       }
-  }
+    }
   })
 }
 
@@ -63,6 +66,10 @@ $(function () {
   $("header").load("header.html");
 
   carregaProdutos();
+
+  $(document).on('keypress', ".form-control", function (e) {
+    e.preventDefault();
+});
 
   $(document).on('click', '.button-new', function (e) {
 

@@ -26,17 +26,11 @@ function inserir(data) {
 
         },
         error: function (response) {
-            var mensagem = "";
-
-            response.responseJSON.errors.forEach((erro) => {
-                mensagem += `${erro.defaultMessage}<br>`;
-            });
+           
 
             Swal.fire({
                 icon: 'error',
-                title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
-                html: `${mensagem}`,
-
+                title: 'Ocorreu um erro ao se registrar... Por favor verifique os campos.'
             });
         }
 

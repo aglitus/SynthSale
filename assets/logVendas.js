@@ -2,19 +2,21 @@ var url = "http://localhost:8080/";
 
 $(() => {
 
-    $("header").load("header.html");
+    if (localStorage.getItem('user_type') == "Admin") {
 
-    $.ajax({
-        type: 'GET',
-        url: url + 'sale',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        headers: {
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        },
-        success: function (jsonResult) {
+        $("header").load("header.html");
 
-            var html = `<table id='tabela' class='table table-carrinho align-middle text-center table-hover'>
+        $.ajax({
+            type: 'GET',
+            url: url + 'sale',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            success: function (jsonResult) {
+
+                var html = `<table id='tabela' class='table table-carrinho align-middle text-center table-hover'>
             <thead>
             <th>#</th>
             <th>Id do usuário</th>
@@ -22,25 +24,27 @@ $(() => {
             <th>Data da compra</th>
             <tbody>`;
 
-            jsonResult.map(log => {
-                html += `<tr>
+                jsonResult.map(log => {
+                    html += `<tr>
                     <td>${log.id}</td>
                     <td>${typeof log.user === 'object' ? log.user.id : log.user}</td>
                     <td>${log.totalValue}</td>
                     <td>${log.saleDate}</td>
                 </tr>`;
-            });
+                });
 
-            html += '</tbody></table>';
+                html += '</tbody></table>';
 
-            $("#lista").html(html);
+                $("#lista").html(html);
 
-        },
-        error: function (http, textStatus) {
-            
-            if (http.status == 401){
-                window.location.href = "login.html?expired=1";
+            },
+            error: function (http, textStatus) {
+
+                if (http.status == 401) {
+                    window.location.href = "login.html?expired=1";
+                }
             }
-        }
-    })
+        })
+
+    } else window.location.href = "home.html";
 });

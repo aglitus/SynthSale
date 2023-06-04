@@ -27,7 +27,7 @@ function carregaCategorias() {
                 title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
                 text: `${response.responseJSON.message}`,
 
-              });
+            });
         }
     })
 }
@@ -59,7 +59,7 @@ function carregaFornecedores() {
                 title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
                 text: `${response.responseJSON.message}`,
 
-              });
+            });
         }
     })
 }
@@ -100,7 +100,7 @@ function inserir(data) {
                 title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
                 text: `${response.responseJSON.message}`,
 
-              });
+            });
         }
 
     });
@@ -140,7 +140,7 @@ function alterar(data, id) {
                 title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
                 text: `${response.responseJSON.message}`,
 
-              });
+            });
         }
 
     });
@@ -182,10 +182,9 @@ function deletar(id) {
                 error: function (response) {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
-                        text: `${response.responseJSON.message}`,
-        
-                      });
+                        title: 'Não é possível deletar o registro. Ele pode estar sendo referenciado em algum outro registro.',
+
+                    });
                 }
 
             });
@@ -207,13 +206,9 @@ function retornaDados(id) {
 
             $("#id").val(jsonResult.id);
             $("#name").val(jsonResult.name);
-            $("#surname").val(jsonResult.surname);
-            $("#document").val(jsonResult.document);
-            $("#birthDate").val(jsonResult.birthDate);
-            $("#address").val(jsonResult.address);
-            $("#user").val(jsonResult.user);
-            $("#password").val(jsonResult.name);
-            $("#phoneNumber").val(jsonResult.phoneNumber);
+            $("#unitaryPrice").val(jsonResult.unitaryPrice);
+            $("#quantity").val(jsonResult.quantity);
+            $("#provider").val(jsonResult.provider.id);
 
             $("#modal").modal("show");
 
@@ -224,7 +219,7 @@ function retornaDados(id) {
                 title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
                 text: `${response.responseJSON.message}`,
 
-              });
+            });
         }
 
     });
@@ -260,7 +255,7 @@ function carregarTabela() {
 
             jsonResult.map(produto => {
                 html += `<tr>
-                            <td><img class="img-thumbnail" src="http://localhost:8080/product/image/${produto.image}"/></td>
+                            <td><img class="img-thumbnail img-fluid" width="120" src="http://localhost:8080/product/image/${produto.image}"/></td>
                             <td>${produto.name}</td>
                             <td>${produto.quantity}</td>
                             <td>${produto.unitaryPrice}</td>
@@ -301,7 +296,7 @@ function carregarTabela() {
                     {
                         text: '<span><i class="bi bi-person-plus"></i> Novo registro</span>',
                         className: "button-new",
-                        action: function ( e, dt, node, config ) {
+                        action: function (e, dt, node, config) {
                             $("#produtos").trigger("reset");
                             $("#id").val("0");
                             $("#modal").modal("show");
@@ -313,8 +308,8 @@ function carregarTabela() {
 
         },
         error: function (http, textStatus) {
-            
-            if (http.status == 401){
+
+            if (http.status == 401) {
                 window.location.href = "login.html?expired=1";
             }
         }
@@ -323,53 +318,56 @@ function carregarTabela() {
 }
 
 $(function () {
-    $("header").load("header.html");
-    carregaCategorias();
-    carregaFornecedores();
 
-    carregarTabela();
+    if (localStorage.getItem('user_type') == "Admin") {
+        $("header").load("header.html");
+        carregaCategorias();
+        carregaFornecedores();
 
-    $("#produtos").on('submit', function (e) {
-        e.preventDefault();
+        carregarTabela();
 
-        var data = new FormData();
+        $("#produtos").on('submit', function (e) {
+            e.preventDefault();
 
-        data.append('file',  $('#imagem')[0].files[0]);
+            var data = new FormData();
 
-        var obj = {
+            data.append('file', $('#imagem')[0].files[0]);
 
-            name: $("#name").val(),
-            quantity: parseInt($("#quantity").val()),
-            unitaryPrice: parseFloat($("#unitaryPrice").val()),
+            var obj = {
 
-            provider: {
-                id: parseInt($("#provider option:selected").val())
-            },
-            category: {
-                id: parseInt($("#category option:selected").val())
+                name: $("#name").val(),
+                quantity: parseInt($("#quantity").val()),
+                unitaryPrice: parseFloat($("#unitaryPrice").val()),
+
+                provider: {
+                    id: parseInt($("#provider option:selected").val())
+                },
+                category: {
+                    id: parseInt($("#category option:selected").val())
+                }
+
+            };
+
+
+            if ($("#id").val() == "0") {
+
+                var json = JSON.stringify(obj);
+                data.append("body", new Blob([json], { type: "application/json" }));
+                inserir(data);
+
+            } else {
+
+                var json = JSON.stringify(obj);
+                obj.id = parseInt($("#id").val());
+                data.append("body", new Blob([json], { type: "application/json" }));
+                alterar(data, obj.id);
             }
 
-        };
+        });
 
-
-        if ($("#id").val() == "0") {
-
-            var json = JSON.stringify(obj);
-            data.append("body", new Blob([json], {type:"application/json"}));
-            inserir(data);
-
-        } else {
-
-            var json = JSON.stringify(obj);
-            obj.id = parseInt($("#id").val());
-            data.append("body", new Blob([json], {type:"application/json"}));
-            alterar(data, obj.id);
-        }
-
-    });
-
-    $("#inserirDados").on("click", function (e) {
-        $("#id").val("0");
-        $("#modal").modal("show");
-    })
+        $("#inserirDados").on("click", function (e) {
+            $("#id").val("0");
+            $("#modal").modal("show");
+        })
+    } else window.location.href = "home.html";
 })

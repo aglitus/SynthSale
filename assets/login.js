@@ -25,7 +25,7 @@ function logar(){
                 timerProgressBar: true,
                 showConfirmButton: false 
               }).then((result) => {
-                window.location.href = 'usuarios.html';
+                window.location.href = 'home.html';
               });
         },
         error: function (htmlobj){

@@ -37,7 +37,7 @@ function inserir(data) {
                 title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
                 text: `${response.responseJSON.message}`,
 
-              });
+            });
         }
 
     });
@@ -78,7 +78,7 @@ function alterar(data) {
                 title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
                 text: `${response.responseJSON.message}`,
 
-              });
+            });
         }
 
     });
@@ -120,10 +120,9 @@ function deletar(id) {
                 error: function (response) {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
-                        text: `${response.responseJSON.message}`,
-        
-                      });
+                        title: 'Não é possível deletar o registro. Ele pode estar sendo referenciado em algum outro registro.',
+
+                    });
                 }
 
             });
@@ -155,7 +154,7 @@ function retornaDados(id) {
                 title: 'Ocorreu um erro ao inserir os dados... Por favor verifique os campos.',
                 text: `${response.responseJSON.message}`,
 
-              });
+            });
         }
 
     });
@@ -226,7 +225,7 @@ function carregarTabela() {
                     {
                         text: '<span><i class="bi bi-person-plus"></i> Novo registro</span>',
                         className: "button-new",
-                        action: function ( e, dt, node, config ) {
+                        action: function (e, dt, node, config) {
                             $("#tipo_usuarios").trigger("reset");
                             $("#id").val("0");
                             $("#modal").modal("show");
@@ -238,8 +237,8 @@ function carregarTabela() {
 
         },
         error: function (http, textStatus) {
-            
-            if (http.status == 401){
+
+            if (http.status == 401) {
                 window.location.href = "login.html?expired=1";
             }
         }
@@ -248,31 +247,34 @@ function carregarTabela() {
 
 $(function () {
 
-    $("header").load("header.html");
-    carregarTabela();
+    if (localStorage.getItem('user_type') == "Admin") {
 
-    $("#tipo_usuarios").on('submit', function (e) {
-        e.preventDefault();
+        $("header").load("header.html");
+        carregarTabela();
 
-        var obj = {
+        $("#tipo_usuarios").on('submit', function (e) {
+            e.preventDefault();
 
-            description: $("#description").val(),
+            var obj = {
 
-        };
+                description: $("#description").val(),
 
-        if ($("#id").val() == "0") {
-            inserir(obj);
-        } else {
-            obj.id = parseInt($("#id").val()),
-                alterar(obj);
-        }
+            };
 
-    });
+            if ($("#id").val() == "0") {
+                inserir(obj);
+            } else {
+                obj.id = parseInt($("#id").val()),
+                    alterar(obj);
+            }
 
-    $("#inserirDados").on("click", function (e) {
-        $("#id").val("0");
-        $("#modal").modal("show");
-    })
+        });
+
+        $("#inserirDados").on("click", function (e) {
+            $("#id").val("0");
+            $("#modal").modal("show");
+        })
+    } else window.location.href = "home.html";
 })
 
 
